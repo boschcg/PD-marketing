@@ -1,0 +1,145 @@
+{
+  "brand": {
+    "wordmark": "Profitdrive"
+  },
+  "meta": {
+    "siteName": "Profitdrive",
+    "defaultTitle": "Profitdrive",
+    "defaultDescription": "Commercial decision system for IT & professional services firms",
+    "pages": {
+      "home": {
+        "title": "Profitdrive",
+        "description": "Commercial decision system for IT & professional services firms"
+      },
+      "product": {
+        "title": "Product | Profitdrive",
+        "description": "Profitdrive marketing site."
+      },
+      "howItWorks": {
+        "title": "How It Works | Profitdrive",
+        "description": "Profitdrive marketing site."
+      },
+      "playbook": {
+        "title": "Playbook | Profitdrive",
+        "description": "Profitdrive marketing site."
+      },
+      "roadmap": {
+        "title": "Roadmap | Profitdrive",
+        "description": "Profitdrive marketing site."
+      },
+      "earlyAccess": {
+        "title": "Early Access | Profitdrive",
+        "description": "Profitdrive marketing site."
+      },
+      "about": {
+        "title": "About | Profitdrive",
+        "description": "Profitdrive marketing site."
+      }
+    }
+  },
+  "nav": {
+    "product": "Product",
+    "howItWorks": "How It Works",
+    "playbook": "Playbook",
+    "roadmap": "Roadmap",
+    "earlyAccess": "Early Access",
+    "about": "About"
+  },
+  "footer": {
+    "sections": {
+      "product": "Product",
+      "playbook": "Playbook",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "links": {
+      "productOverview": "Product Overview",
+      "howItWorks": "How It Works",
+      "roadmap": "Roadmap",
+      "playbook": "Playbook",
+      "about": "About",
+      "earlyAccess": "Early Access",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms"
+    },
+    "copyright": "© {year} Profitdrive. All rights reserved."
+  },
+  "common": {
+    "placeholder": "Content to be rendered in WO-02.",
+    "menu": "Menu",
+    "backToPlaybook": "Back to Playbook",
+    "playbook": "Playbook",
+    "readTime": "{minutes} min read"
+  },
+  "consent": {
+    "title": "Analytics consent",
+    "body": "We use analytics to understand how visitors use our site. You can accept or decline.",
+    "accept": "Accept analytics",
+    "decline": "Decline",
+    "privacy": "Privacy"
+  },
+  "forms": {
+    "earlyAccess": {
+      "title": "Request Early Access",
+      "email": {
+        "label": "Email",
+        "placeholder": "your.email@example.com",
+        "required": "Email is required",
+        "invalid": "Please enter a valid email address"
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "Your name"
+      },
+      "company": {
+        "label": "Company",
+        "placeholder": "Your company name"
+      },
+      "role": {
+        "label": "Role",
+        "placeholder": "Select your role",
+        "founder": "Founder/CEO",
+        "finance": "Finance",
+        "ops": "Ops/Delivery",
+        "sales": "Sales",
+        "other": "Other"
+      },
+      "comment": {
+        "label": "Comment",
+        "placeholder": "Optional message"
+      },
+      "submit": "Submit Request",
+      "submitting": "Submitting...",
+      "success": "Thank you! We'll be in touch soon.",
+      "error": "Something went wrong. Please try again later.",
+      "rateLimit": "Too many requests. Please try again later."
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Homepage"
+    },
+    "product": {
+      "title": "Product"
+    },
+    "howItWorks": {
+      "title": "How It Works"
+    },
+    "playbook": {
+      "title": "Playbook"
+    },
+    "playbookSlug": {
+      "title": "Playbook Article"
+    },
+    "roadmap": {
+      "title": "Roadmap"
+    },
+    "earlyAccess": {
+      "title": "Early Access"
+    },
+    "about": {
+      "title": "About"
+    }
+  }
+}
+
