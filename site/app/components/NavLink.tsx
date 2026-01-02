@@ -18,14 +18,23 @@ export default function NavLink({ href, children, locale: _locale }: NavLinkProp
     <Link
       href={href}
       className={`
-        text-sm font-medium transition-colors
+        text-sm font-medium transition-colors relative inline-block
         ${isActive 
-          ? 'text-gray-900 font-semibold border-b-2 border-gray-900 pb-1' 
-          : 'text-gray-600 hover:text-gray-900'
+          ? 'text-[var(--brand-blue)] font-semibold pb-2' 
+          : 'text-[var(--pd-text-secondary)] hover:text-[var(--brand-blue)] pb-2'
         }
       `}
     >
       {children}
+      {isActive && (
+        <span 
+          className="absolute bottom-0 left-0 right-0"
+          style={{ 
+            backgroundColor: 'var(--brand-blue)',
+            height: '2px',
+          }}
+        />
+      )}
     </Link>
   );
 }

@@ -1,21 +1,12 @@
 @import "tailwindcss";
-
-:root {
-  /* Brand Colors */
-  --brand-navy: #1a2b4a;
-  --action-green: #2d8659;
-  
-  /* Base */
-  --background: #ffffff;
-  --foreground: #111827;
-}
+@import "./styles/theme.css";
 
 body {
-  background: var(--background);
+  background: #f9fafb;
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -24,10 +15,11 @@ body {
 .prose-content h1 {
   font-size: 2.25rem;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 700;
   color: #111827;
   margin-top: 0;
   margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
 }
 
 @media (min-width: 768px) {
@@ -39,10 +31,11 @@ body {
 .prose-content h2 {
   font-size: 1.5rem;
   line-height: 1.3;
-  font-weight: 600;
+  font-weight: 700;
   color: #111827;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
 }
 
 @media (min-width: 768px) {
@@ -56,8 +49,8 @@ body {
   line-height: 1.4;
   font-weight: 600;
   color: #111827;
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -70,7 +63,7 @@ body {
   font-size: 1rem;
   line-height: 1.75;
   color: #374151;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .prose-content ul,
@@ -95,15 +88,78 @@ body {
   color: #111827;
   text-decoration: underline;
   text-decoration-color: #9ca3af;
+  font-weight: 500;
+  transition: text-decoration-color 0.2s;
 }
 
 .prose-content a:hover {
-  text-decoration-color: #4b5563;
+  text-decoration-color: #111827;
 }
 
 .prose-content hr {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
   border: none;
   border-top: 1px solid #e5e7eb;
+}
+
+/* Max content width for better readability */
+.prose-content {
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .prose-content {
+    max-width: 65ch;
+  }
+}
+
+/* Hide Next.js DevTools bubble if disabled */
+@supports selector(:has(*)) {
+  body:has([data-nextjs-toast]) [data-nextjs-toast] {
+    display: none !important;
+  }
+}
+
+/* Fallback: Hide Next.js devtools launcher */
+[data-nextjs-toast] {
+  display: none !important;
+}
+
+/* Brand button styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #1a2b4a;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: #15203a;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1a2b4a;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background-color: #f3f4f6;
 }

@@ -5,8 +5,10 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ConsentBanner from "../components/ConsentBanner";
 import AnalyticsProvider from "../components/AnalyticsProvider";
+import DevOverrides from "../components/DevOverrides";
 import { getValidLocale } from "@/lib/locale-utils";
 import { t } from "@/lib/i18n";
+import { getAnalyticsConfig } from "@/lib/analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +36,17 @@ export async function generateMetadata({
   return {
     title: t(validLocale, 'meta.pages.home.title'),
     description: t(validLocale, 'meta.pages.home.description'),
+    icons: {
+      icon: [
+        { url: '/images/favicon/favicon.ico', sizes: 'any' },
+        { url: '/images/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/images/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/images/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+    },
+    manifest: '/site.webmanifest',
   };
 }
 
@@ -47,16 +60,21 @@ export default async function LocaleLayout({
   const { locale } = await params;
   const validLocale = getValidLocale(locale);
   
+  // Check if analytics is enabled
+  const analyticsConfig = getAnalyticsConfig();
+  const isAnalyticsEnabled = analyticsConfig.enabled;
+  
   return (
     <html lang={validLocale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AnalyticsProvider />
+        <DevOverrides />
+        {isAnalyticsEnabled && <AnalyticsProvider />}
         <Header locale={validLocale} />
         {children}
         <Footer locale={validLocale} />
-        <ConsentBanner locale={validLocale} />
+        {isAnalyticsEnabled && <ConsentBanner locale={validLocale} />}
       </body>
     </html>
   );

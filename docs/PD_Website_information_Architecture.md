@@ -1,7 +1,7 @@
 # Profitdrive Marketing Website – Information Architecture
 
 Version: v1  
-Date: 01 Jan 2026  
+Date: 02 Jan 2026  
 Status: Agreed baseline for Cursor build
 
 ---
@@ -31,9 +31,35 @@ Top navigation should remain intentionally small.
 3. **Playbook**
 4. **Roadmap**
 5. **Early Access** (Primary CTA)
+6. **Login** (Secondary right-aligned nav item, present now even if it routes to a placeholder)
 
-Optional secondary CTA:
-- **Login** (only once product is live)
+**Login Label Guidance:**
+- Use "Login" (not "Sign in") unless/until product copy dictates otherwise
+
+### Header/Top Bar Behaviour
+
+**Left Side:**
+- Profitdrive wordmark lockup per Design Intent
+- Exact format: "Profitdrive␠␠//" (two spaces before "//")
+- Exact colours: Brand Navy (`#3730A3`) for "Profitdrive", Action Green (`#56D384`) for "//"
+- Never black, never grey approximations
+
+**Centre/Right:**
+- Navigation items as specified above
+- Login placement: right-aligned secondary nav item
+
+**Active State Behaviour:**
+- Active nav item must use app-style underline behaviour
+- Brand Navy text (`#3730A3`) + underline (same thickness and offset as app tabs)
+- Explicitly maintains parity with app tab interaction (see Design Intent 3.4)
+
+**Inactive State:**
+- Neutral grey text
+- No underline
+
+**Hover State:**
+- Subtle transition only
+- No colour noise
 
 ---
 
@@ -221,6 +247,17 @@ When building:
 - Render `.md` files faithfully
 - Prefer whitespace over density
 - Prefer clarity over persuasion
+
+### Non-Functional Guardrails for Marketing Site
+
+**Analytics:**
+- Analytics is disabled by default
+- No consent UI elements
+- No floating widgets (including the "N" badge or any analytics indicators)
+- If analytics is later enabled, it must be non-invasive and never add persistent UI elements
+
+**Site Polish Baseline:**
+- Favicon must be applied (site polish baseline requirement)
 
 ---
 

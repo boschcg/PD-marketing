@@ -1,6 +1,6 @@
 # Profitdrive UI/UX Design Intent
 
-Date: 1 January 2026  
+Date: 2 January 2026  
 Status: Canonical Design Guidance  
 Audience: Product, Design, Engineering, Cursor (Implementation)
 
@@ -47,6 +47,25 @@ The following elements are **identical across marketing and product**:
 - No decorative or novelty colours
 - No gradients that obscure data or meaning
 
+#### Brand Lockup Spec (Marketing + App)
+
+The Profitdrive wordmark lockup is **identical** across marketing website and product application.
+
+**Exact Format:**
+- Wordmark: "Profitdrive"
+- Separator: "//"
+- Spacing: Two spaces between "Profitdrive" and "//" (exact: "Profitdrive␠␠//")
+
+**Exact Colour Values:**
+- Brand Navy: `#3730A3` (wordmark "Profitdrive")
+- Action Green: `#56D384` (separator "//")
+
+**Usage Rules:**
+- Wordmark always uses Brand Navy (`#3730A3`); never black, never grey
+- Separator "//" always uses Action Green (`#56D384`)
+- No opacity tricks, no "close enough" shades
+- This lockup must match the app implementation exactly
+
 ### 3.2 Typography
 - Same font family across all surfaces
 - Clear hierarchy: Headline → Section → Body → Meta
@@ -62,6 +81,25 @@ The following elements are **identical across marketing and product**:
 - Buttons, cards, inputs, tables, badges
 - Icon style (simple, restrained, functional)
 - Border radius, shadows, and elevation rules
+
+#### Navigation Interaction Parity (Website ↔ App)
+
+The website top navigation must mirror the app tab behaviour to preserve the "no visual reset" principle.
+
+**Active State:**
+- Brand Navy text (`#3730A3`)
+- Underline (same thickness and offset as app tabs)
+- No colour noise or decorative effects
+
+**Inactive State:**
+- Neutral grey text
+- No underline
+
+**Hover State:**
+- Subtle transition only
+- No colour noise
+
+**Rationale:** Users moving from marketing → product should experience visual continuity, not a jarring change in interaction patterns.
 
 ### 3.5 Tone
 - Calm, confident, professional
@@ -135,9 +173,25 @@ The following are **not allowed** anywhere in Profitdrive:
 - Stock imagery
 - Excessive gradients or shadows
 - Gamification elements
-- “Fun” UI at the expense of clarity
+- "Fun" UI at the expense of clarity
 
 Profitdrive optimises for **trust and judgement**, not delight.
+
+### Analytics Default-Off (No UI Artifacts)
+
+Analytics is **disabled by default** on the marketing website until an explicit go-live decision is made.
+
+**Required Behaviour:**
+- No consent banners
+- No floating widgets (including the "N" badge or any analytics UI indicators)
+- No persistent UI elements related to analytics
+
+**If Analytics Is Later Enabled:**
+- It must be non-invasive
+- It must never add persistent UI elements
+- It must not require consent banners or floating widgets
+
+The marketing site should remain clean and uncluttered regardless of analytics state.
 
 ---
 

@@ -1,18 +1,46 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Local Development
 
-First, run the development server:
+This project uses pnpm.
+
+**Important:** All commands must be run from the `site/` directory, or use `pnpm -C site <command>` from the repo root.
+
+### From repo root (recommended)
+
+Install dependencies:
+```bash
+pnpm -C site install
+```
+
+Run locally:
+```bash
+pnpm -C site dev
+```
+
+Build:
+```bash
+pnpm -C site build
+```
+
+Lint:
+```bash
+pnpm -C site lint:full
+```
+
+### From site/ directory
+
+Alternatively, `cd site` first, then run commands without `-C site`:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+cd site
+pnpm install
 pnpm dev
-# or
-bun dev
+pnpm build
+pnpm lint:full
 ```
+
+**Note:** The Next.js DevTools "N" overlay is automatically hidden in development mode via CSS overrides.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

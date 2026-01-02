@@ -68,10 +68,20 @@ export function hasAnalyticsConsent(): boolean {
   return consent?.choice === 'accepted';
 }
 
+import { getAnalyticsConfig } from '@/lib/analytics';
+
 /**
- * Check if consent banner should be shown (no consent stored)
+ * Check if consent banner should be shown (no consent stored AND analytics enabled)
  */
 export function shouldShowConsentBanner(): boolean {
+  // If analytics is disabled, never show the banner
+  const config = getAnalyticsConfig();
+  if (!config.enabled) {
+    return false;
+  }
+  
+  // Only show if no consent is stored
   return getConsent() === null;
 }
+
 

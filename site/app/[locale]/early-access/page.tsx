@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageShell from "../../components/PageShell";
-import ContentLayout from "../../components/ContentLayout";
+import EarlyAccessPageContent from "../../components/EarlyAccessPageContent";
 import EarlyAccessForm from "../../components/EarlyAccessForm";
 import { t } from "@/lib/i18n";
 import { getValidLocale } from "@/lib/locale-utils";
@@ -51,10 +51,22 @@ export default async function EarlyAccessPage({ params }: EarlyAccessPageProps) 
   
   return (
     <PageShell>
-      <ContentLayout toc={entry.toc} locale={validLocale}>
-        <div dangerouslySetInnerHTML={{ __html: entry.contentHtml }} />
+      {/* Section 1-5: Page Content */}
+      <EarlyAccessPageContent />
+      
+      {/* Section 6: Request Early Access Form */}
+      <section className="mt-16 lg:mt-24">
+        <h2
+          className="text-2xl lg:text-3xl font-semibold mb-6"
+          style={{
+            color: 'var(--pd-text)',
+            lineHeight: '1.3',
+          }}
+        >
+          Request Early Access
+        </h2>
         <EarlyAccessForm locale={validLocale} />
-      </ContentLayout>
+      </section>
     </PageShell>
   );
 }

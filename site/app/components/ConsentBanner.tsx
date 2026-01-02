@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { t, Locale } from '@/lib/i18n';
 import { setConsent, shouldShowConsentBanner } from '@/lib/consent/consent';
+import { getAnalyticsConfig } from '@/lib/analytics';
 
 interface ConsentBannerProps {
   locale: Locale;
@@ -11,6 +12,12 @@ interface ConsentBannerProps {
 export default function ConsentBanner({ locale }: ConsentBannerProps) {
   // Only show if no consent is stored
   const [show] = useState(() => shouldShowConsentBanner());
+  
+  // Early return if analytics is disabled
+  const config = getAnalyticsConfig();
+  if (!config.enabled) {
+    return null;
+  }
 
   const handleAccept = () => {
     setConsent('accepted');

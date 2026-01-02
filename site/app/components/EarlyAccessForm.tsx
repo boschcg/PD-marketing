@@ -14,12 +14,25 @@ interface FormData {
   name: string;
   company: string;
   role: string;
+  companySize: string;
   comment: string;
   website: string; // Honeypot field
 }
 
 interface FormErrors {
   email?: string;
+  name?: string;
+  company?: string;
+  role?: string;
+  companySize?: string;
+}
+
+interface TouchedFields {
+  name: boolean;
+  email: boolean;
+  company: boolean;
+  role: boolean;
+  companySize: boolean;
 }
 
 export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
@@ -28,12 +41,21 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
     name: '',
     company: '',
     role: '',
+    companySize: '',
     comment: '',
     website: '', // Honeypot
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<TouchedFields>({
+    name: false,
+    email: false,
+    company: false,
+    role: false,
+    companySize: false,
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState<string>('');
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,13 +68,40 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
     setSubmitStatus('idle');
 
     // Client-side validation
-    if (!formData.email.trim()) {
-      setErrors({ email: t(locale, 'forms.earlyAccess.email.required') });
-      return;
+    const newErrors: FormErrors = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = t(locale, 'forms.earlyAccess.name.required');
     }
-
-    if (!validateEmail(formData.email)) {
-      setErrors({ email: t(locale, 'forms.earlyAccess.email.invalid') });
+    
+    if (!formData.email.trim()) {
+      newErrors.email = t(locale, 'forms.earlyAccess.email.required');
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = t(locale, 'forms.earlyAccess.email.invalid');
+    }
+    
+    if (!formData.company.trim()) {
+      newErrors.company = t(locale, 'forms.earlyAccess.company.required');
+    }
+    
+    if (!formData.role) {
+      newErrors.role = t(locale, 'forms.earlyAccess.role.required');
+    }
+    
+    if (!formData.companySize) {
+      newErrors.companySize = t(locale, 'forms.earlyAccess.companySize.required');
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // Mark all fields as touched when validation fails on submit
+      setTouched({
+        name: true,
+        email: true,
+        company: true,
+        role: true,
+        companySize: true,
+      });
       return;
     }
 
@@ -70,11 +119,12 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
+          body: JSON.stringify({
           email: formData.email.trim(),
-          name: formData.name.trim() || undefined,
-          company: formData.company.trim() || undefined,
-          role: formData.role || undefined,
+          name: formData.name.trim(),
+          company: formData.company.trim(),
+          role: formData.role,
+          companySize: formData.companySize,
           comment: formData.comment.trim() || undefined,
         }),
       });
@@ -83,7 +133,8 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
         const data = await response.json().catch(() => ({}));
         if (response.status === 429) {
           setSubmitStatus('error');
-          // Rate limit error message is already in the error state
+          setSubmitError(t(locale, 'forms.earlyAccess.error'));
+          setIsSubmitting(false);
           return;
         }
         throw new Error(data.message || 'Submission failed');
@@ -106,11 +157,13 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
         name: '',
         company: '',
         role: '',
+        companySize: '',
         comment: '',
         website: '',
       });
     } catch {
       setSubmitStatus('error');
+      setSubmitError(t(locale, 'forms.earlyAccess.error'));
     } finally {
       setIsSubmitting(false);
     }
@@ -118,16 +171,55 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
 
   if (submitStatus === 'success') {
     return (
-      <div className="mt-12 p-6 bg-gray-50 border border-gray-200 rounded-lg">
-        <p className="text-base text-gray-900 font-medium">
-          {t(locale, 'forms.earlyAccess.success')}
+      <div 
+        className="p-6 rounded-lg border space-y-3"
+        style={{
+          backgroundColor: 'var(--pd-surface)',
+          borderColor: 'var(--pd-border)',
+        }}
+      >
+        <h3 
+          className="text-lg font-semibold"
+          style={{
+            color: 'var(--pd-text)',
+          }}
+        >
+          {t(locale, 'forms.earlyAccess.success.header')}
+        </h3>
+        <p 
+          className="text-base leading-relaxed"
+          style={{
+            color: 'var(--pd-text-secondary)',
+            lineHeight: 'var(--pd-font-body-line)',
+          }}
+        >
+          {t(locale, 'forms.earlyAccess.success.message')}
         </p>
+        <p 
+          className="text-sm leading-relaxed"
+          style={{
+            color: 'var(--pd-text-secondary)',
+          }}
+        >
+          {t(locale, 'forms.earlyAccess.success.secondary')}
+        </p>
+        <div className="pt-2">
+          <a
+            href={`/${locale}/product`}
+            className="text-sm underline"
+            style={{
+              color: 'var(--pd-text-secondary)',
+            }}
+          >
+            {t(locale, 'forms.earlyAccess.success.backToProduct')}
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-12 space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       {/* Honeypot field (hidden from users) */}
       <input
         type="text"
@@ -140,10 +232,48 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
         aria-hidden="true"
       />
 
-      {/* Email (required) */}
+      {/* Name (required) */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
-          {t(locale, 'forms.earlyAccess.email.label')} <span className="text-gray-500">*</span>
+        <label htmlFor="name" className="block text-sm font-medium mb-2" style={{ color: 'var(--pd-text)' }}>
+          {t(locale, 'forms.earlyAccess.name.label')} <span style={{ color: 'var(--pd-text-secondary)' }}>*</span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          value={formData.name}
+          onChange={(e) => {
+            setFormData({ ...formData, name: e.target.value });
+            if (errors.name) {
+              setErrors({ ...errors, name: undefined });
+            }
+          }}
+          onBlur={() => setTouched({ ...touched, name: true })}
+          placeholder={t(locale, 'forms.earlyAccess.name.placeholder')}
+          className={`w-full px-4 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${
+            errors.name && touched.name
+              ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:border-gray-900 focus:ring-gray-900'
+          }`}
+          style={{
+            color: 'var(--pd-text)',
+            backgroundColor: 'var(--pd-surface)',
+          }}
+          aria-invalid={errors.name && touched.name ? 'true' : 'false'}
+          aria-describedby={errors.name && touched.name ? 'name-error' : undefined}
+        />
+        {errors.name && touched.name && (
+          <p id="name-error" className="mt-1 text-sm" style={{ color: 'var(--pd-text-secondary)' }}>
+            {errors.name}
+          </p>
+        )}
+      </div>
+
+      {/* Work Email (required) */}
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium mb-2" style={{ color: 'var(--pd-text)' }}>
+          {t(locale, 'forms.earlyAccess.email.label')} <span style={{ color: 'var(--pd-text-secondary)' }}>*</span>
         </label>
         <input
           type="email"
@@ -151,75 +281,160 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
           name="email"
           required
           value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          onChange={(e) => {
+            setFormData({ ...formData, email: e.target.value });
+            if (errors.email) {
+              setErrors({ ...errors, email: undefined });
+            }
+          }}
+          onBlur={() => setTouched({ ...touched, email: true })}
           placeholder={t(locale, 'forms.earlyAccess.email.placeholder')}
-          className={`w-full px-4 py-2 border rounded-lg text-base ${
-            errors.email
+          className={`w-full px-4 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${
+            errors.email && touched.email
               ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
               : 'border-gray-300 focus:border-gray-900 focus:ring-gray-900'
-          } focus:outline-none focus:ring-1`}
+          }`}
+          style={{
+            color: 'var(--pd-text)',
+            backgroundColor: 'var(--pd-surface)',
+          }}
+          aria-invalid={errors.email && touched.email ? 'true' : 'false'}
+          aria-describedby={errors.email && touched.email ? 'email-error' : undefined}
         />
-        {errors.email && (
-          <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+        {errors.email && touched.email && (
+          <p id="email-error" className="mt-1 text-sm" style={{ color: 'var(--pd-text-secondary)' }}>
+            {errors.email}
+          </p>
         )}
       </div>
 
-      {/* Name (optional) */}
+      {/* Company (required) */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
-          {t(locale, 'forms.earlyAccess.name.label')}
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder={t(locale, 'forms.earlyAccess.name.placeholder')}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:border-gray-900 focus:ring-1 focus:ring-gray-900 focus:outline-none"
-        />
-      </div>
-
-      {/* Company (optional) */}
-      <div>
-        <label htmlFor="company" className="block text-sm font-medium text-gray-900 mb-2">
-          {t(locale, 'forms.earlyAccess.company.label')}
+        <label htmlFor="company" className="block text-sm font-medium mb-2" style={{ color: 'var(--pd-text)' }}>
+          {t(locale, 'forms.earlyAccess.company.label')} <span style={{ color: 'var(--pd-text-secondary)' }}>*</span>
         </label>
         <input
           type="text"
           id="company"
           name="company"
+          required
           value={formData.company}
-          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+          onChange={(e) => {
+            setFormData({ ...formData, company: e.target.value });
+            if (errors.company) {
+              setErrors({ ...errors, company: undefined });
+            }
+          }}
+          onBlur={() => setTouched({ ...touched, company: true })}
           placeholder={t(locale, 'forms.earlyAccess.company.placeholder')}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:border-gray-900 focus:ring-1 focus:ring-gray-900 focus:outline-none"
+          className={`w-full px-4 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${
+            errors.company && touched.company
+              ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:border-gray-900 focus:ring-gray-900'
+          }`}
+          style={{
+            color: 'var(--pd-text)',
+            backgroundColor: 'var(--pd-surface)',
+          }}
+          aria-invalid={errors.company && touched.company ? 'true' : 'false'}
+          aria-describedby={errors.company && touched.company ? 'company-error' : undefined}
         />
+        {errors.company && touched.company && (
+          <p id="company-error" className="mt-1 text-sm" style={{ color: 'var(--pd-text-secondary)' }}>
+            {errors.company}
+          </p>
+        )}
       </div>
 
-      {/* Role (optional dropdown) */}
+      {/* Role (required dropdown) */}
       <div>
-        <label htmlFor="role" className="block text-sm font-medium text-gray-900 mb-2">
-          {t(locale, 'forms.earlyAccess.role.label')}
+        <label htmlFor="role" className="block text-sm font-medium mb-2" style={{ color: 'var(--pd-text)' }}>
+          {t(locale, 'forms.earlyAccess.role.label')} <span style={{ color: 'var(--pd-text-secondary)' }}>*</span>
         </label>
         <select
           id="role"
           name="role"
+          required
           value={formData.role}
-          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:border-gray-900 focus:ring-1 focus:ring-gray-900 focus:outline-none"
+          onChange={(e) => {
+            setFormData({ ...formData, role: e.target.value });
+            if (errors.role) {
+              setErrors({ ...errors, role: undefined });
+            }
+          }}
+          onBlur={() => setTouched({ ...touched, role: true })}
+          className={`w-full px-4 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${
+            errors.role && touched.role
+              ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:border-gray-900 focus:ring-gray-900'
+          }`}
+          style={{
+            color: 'var(--pd-text)',
+            backgroundColor: 'var(--pd-surface)',
+          }}
+          aria-invalid={errors.role && touched.role ? 'true' : 'false'}
+          aria-describedby={errors.role && touched.role ? 'role-error' : undefined}
         >
           <option value="">{t(locale, 'forms.earlyAccess.role.placeholder')}</option>
-          <option value="founder">{t(locale, 'forms.earlyAccess.role.founder')}</option>
+          <option value="leadership">{t(locale, 'forms.earlyAccess.role.leadership')}</option>
           <option value="finance">{t(locale, 'forms.earlyAccess.role.finance')}</option>
-          <option value="ops">{t(locale, 'forms.earlyAccess.role.ops')}</option>
-          <option value="sales">{t(locale, 'forms.earlyAccess.role.sales')}</option>
+          <option value="operations">{t(locale, 'forms.earlyAccess.role.operations')}</option>
+          <option value="advisor">{t(locale, 'forms.earlyAccess.role.advisor')}</option>
           <option value="other">{t(locale, 'forms.earlyAccess.role.other')}</option>
         </select>
+        {errors.role && touched.role && (
+          <p id="role-error" className="mt-1 text-sm" style={{ color: 'var(--pd-text-secondary)' }}>
+            {errors.role}
+          </p>
+        )}
       </div>
 
-      {/* Comment (optional textarea) */}
+      {/* Company Size (required dropdown) */}
       <div>
-        <label htmlFor="comment" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="companySize" className="block text-sm font-medium mb-2" style={{ color: 'var(--pd-text)' }}>
+          {t(locale, 'forms.earlyAccess.companySize.label')} <span style={{ color: 'var(--pd-text-secondary)' }}>*</span>
+        </label>
+        <select
+          id="companySize"
+          name="companySize"
+          required
+          value={formData.companySize}
+          onChange={(e) => {
+            setFormData({ ...formData, companySize: e.target.value });
+            if (errors.companySize) {
+              setErrors({ ...errors, companySize: undefined });
+            }
+          }}
+          onBlur={() => setTouched({ ...touched, companySize: true })}
+          className={`w-full px-4 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${
+            errors.companySize && touched.companySize
+              ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:border-gray-900 focus:ring-gray-900'
+          }`}
+          style={{
+            color: 'var(--pd-text)',
+            backgroundColor: 'var(--pd-surface)',
+          }}
+          aria-invalid={errors.companySize && touched.companySize ? 'true' : 'false'}
+          aria-describedby={errors.companySize && touched.companySize ? 'companySize-error' : undefined}
+        >
+          <option value="">{t(locale, 'forms.earlyAccess.companySize.placeholder')}</option>
+          <option value="1-10">{t(locale, 'forms.earlyAccess.companySize.1-10')}</option>
+          <option value="11-30">{t(locale, 'forms.earlyAccess.companySize.11-30')}</option>
+          <option value="31-75">{t(locale, 'forms.earlyAccess.companySize.31-75')}</option>
+          <option value="76-150">{t(locale, 'forms.earlyAccess.companySize.76-150')}</option>
+          <option value="150+">{t(locale, 'forms.earlyAccess.companySize.150+')}</option>
+        </select>
+        {errors.companySize && touched.companySize && (
+          <p id="companySize-error" className="mt-1 text-sm" style={{ color: 'var(--pd-text-secondary)' }}>
+            {errors.companySize}
+          </p>
+        )}
+      </div>
+
+      {/* What prompted your interest? (optional textarea) */}
+      <div>
+        <label htmlFor="comment" className="block text-sm font-medium mb-2" style={{ color: 'var(--pd-text)' }}>
           {t(locale, 'forms.earlyAccess.comment.label')}
         </label>
         <textarea
@@ -230,14 +445,29 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
           onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
           placeholder={t(locale, 'forms.earlyAccess.comment.placeholder')}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:border-gray-900 focus:ring-1 focus:ring-gray-900 focus:outline-none resize-y"
+          style={{
+            color: 'var(--pd-text)',
+            backgroundColor: 'var(--pd-surface)',
+          }}
         />
       </div>
 
-      {/* Error message */}
-      {submitStatus === 'error' && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-800">
-            {t(locale, 'forms.earlyAccess.error')}
+      {/* Submission error message */}
+      {submitStatus === 'error' && submitError && (
+        <div 
+          className="p-4 rounded-lg border"
+          style={{
+            backgroundColor: 'var(--pd-surface)',
+            borderColor: 'var(--pd-border)',
+          }}
+        >
+          <p 
+            className="text-sm"
+            style={{
+              color: 'var(--pd-text-secondary)',
+            }}
+          >
+            {submitError}
           </p>
         </div>
       )}
@@ -247,7 +477,19 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-6 py-3 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{
+            backgroundColor: 'var(--brand-blue)',
+            color: 'white',
+          }}
+          onMouseEnter={(e) => {
+            if (!isSubmitting) {
+              e.currentTarget.style.opacity = '0.9';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = '1';
+          }}
         >
           {isSubmitting
             ? t(locale, 'forms.earlyAccess.submitting')

@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { hasAnalyticsConsent } from '@/lib/consent/consent';
-import { initializeAnalytics, trackPageView } from '@/lib/analytics';
+import { getAnalyticsConfig, initializeAnalytics, trackPageView } from '@/lib/analytics';
 import { captureUTMParams } from '@/lib/analytics/utm';
 
 /**
@@ -15,6 +15,12 @@ export default function AnalyticsProvider() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Early return if analytics is disabled
+    const config = getAnalyticsConfig();
+    if (!config.enabled) {
+      return;
+    }
+
     // Capture UTM parameters on mount (before consent check)
     captureUTMParams();
 
@@ -40,4 +46,5 @@ export default function AnalyticsProvider() {
   // This component doesn't render anything
   return null;
 }
+
 

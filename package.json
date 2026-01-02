@@ -1,0 +1,16 @@
+{
+  "name": "pd-website",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.19.0",
+  "scripts": {
+    "dev": "pnpm -C site dev",
+    "build": "pnpm -C site build",
+    "start": "pnpm -C site start",
+    "lint": "pnpm -C site lint",
+    "check:i18n": "pnpm -C site check:i18n",
+    "lint:full": "pnpm -C site lint:full",
+    "install": "pnpm -C site install"
+  }
+}
+

@@ -82,36 +82,54 @@
     "earlyAccess": {
       "title": "Request Early Access",
       "email": {
-        "label": "Email",
+        "label": "Work email",
         "placeholder": "your.email@example.com",
-        "required": "Email is required",
+        "required": "Work email is required",
         "invalid": "Please enter a valid email address"
       },
       "name": {
         "label": "Name",
-        "placeholder": "Your name"
+        "placeholder": "Your name",
+        "required": "Name is required"
       },
       "company": {
         "label": "Company",
-        "placeholder": "Your company name"
+        "placeholder": "Your company name",
+        "required": "Company is required"
       },
       "role": {
         "label": "Role",
         "placeholder": "Select your role",
-        "founder": "Founder/CEO",
+        "leadership": "Leadership",
         "finance": "Finance",
-        "ops": "Ops/Delivery",
-        "sales": "Sales",
-        "other": "Other"
+        "operations": "Operations",
+        "advisor": "Advisor",
+        "other": "Other",
+        "required": "This field is required"
+      },
+      "companySize": {
+        "label": "Company size",
+        "placeholder": "Select company size",
+        "1-10": "1–10",
+        "11-30": "11–30",
+        "31-75": "31–75",
+        "76-150": "76–150",
+        "150+": "150+",
+        "required": "This field is required"
       },
       "comment": {
-        "label": "Comment",
-        "placeholder": "Optional message"
+        "label": "What prompted your interest?",
+        "placeholder": "Optional"
       },
-      "submit": "Submit Request",
+      "submit": "Request Early Access",
       "submitting": "Submitting...",
-      "success": "Thank you! We'll be in touch soon.",
-      "error": "Something went wrong. Please try again later.",
+      "success": {
+        "header": "Request received",
+        "message": "Thanks — we've received your Early Access request. We'll review it and follow up with next steps.",
+        "secondary": "You don't need to do anything else for now.",
+        "backToProduct": "Back to Product"
+      },
+      "error": "Something went wrong while submitting your request. Please try again, or refresh the page.",
       "rateLimit": "Too many requests. Please try again later."
     }
   },

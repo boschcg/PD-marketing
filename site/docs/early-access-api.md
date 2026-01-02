@@ -4,6 +4,8 @@
 
 The Early Access form submission API (`/api/early-access`) handles form submissions with validation, spam protection, and rate limiting.
 
+**Important:** Early Access requests are reviewed manually. This is intentional and aligns with Profitdrive's executive-safe, non-salesy approach. See [Early Access Review Process](./early-access-review-process.md) for internal handling guidelines.
+
 ## Environment Variables
 
 ### `EARLY_ACCESS_WEBHOOK_URL` (optional)
@@ -21,7 +23,8 @@ EARLY_ACCESS_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/123456/abcdef
   "email": "user@example.com",
   "name": "John Doe",
   "company": "Acme Corp",
-  "role": "founder",
+  "role": "leadership",
+  "companySize": "11-30",
   "comment": "Interested in early access",
   "submittedAt": "2026-01-01T12:00:00.000Z"
 }
@@ -55,9 +58,10 @@ EARLY_ACCESS_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/123456/abcdef
 
 ### Input Validation
 - Email: Required, must be valid format, max 255 characters
-- Name: Optional, max 200 characters
-- Company: Optional, max 200 characters
-- Role: Optional, must be one of: `founder`, `finance`, `ops`, `sales`, `other`
+- Name: Required, max 200 characters
+- Company: Required, max 200 characters
+- Role: Required, must be one of: `leadership`, `finance`, `operations`, `advisor`, `other`
+- Company Size: Required, must be one of: `1-10`, `11-30`, `31-75`, `76-150`, `150+`
 - Comment: Optional, max 2000 characters
 
 ### Error Responses
@@ -96,7 +100,8 @@ EARLY_ACCESS_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/123456/abcdef
   "email": "user@example.com",
   "name": "John Doe",
   "company": "Acme Corp",
-  "role": "founder",
+  "role": "leadership",
+  "companySize": "11-30",
   "comment": "Optional message"
 }
 ```
@@ -112,4 +117,5 @@ EARLY_ACCESS_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/123456/abcdef
 - `400 Bad Request`: Validation failed
 - `429 Too Many Requests`: Rate limit exceeded
 - `500 Internal Server Error`: Server error
+
 

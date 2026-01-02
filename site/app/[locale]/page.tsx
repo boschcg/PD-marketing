@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import PageShell from "../components/PageShell";
-import ContentLayout from "../components/ContentLayout";
+import HomepageLayout from "../components/HomepageLayout";
 import { t } from "@/lib/i18n";
 import { getValidLocale } from "@/lib/locale-utils";
 import { getPage } from "@/lib/content/index";
@@ -39,20 +38,24 @@ export default async function HomePage({ params }: HomePageProps) {
   const entry = await getPage('home');
   if (!entry) {
     return (
-      <PageShell>
-        <p className="text-base text-gray-600">
-          {t(validLocale, 'common.placeholder')}
-        </p>
-      </PageShell>
+      <main className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-24">
+          <p className="text-base text-gray-600">
+            {t(validLocale, 'common.placeholder')}
+          </p>
+        </div>
+      </main>
     );
   }
   
   return (
-    <PageShell>
-      <ContentLayout toc={entry.toc} locale={validLocale}>
-        <div dangerouslySetInnerHTML={{ __html: entry.contentHtml }} />
-      </ContentLayout>
-    </PageShell>
+    <HomepageLayout
+      title={entry.meta?.title || 'Profitdrive'}
+      description={entry.meta?.description}
+      excerpt={entry.meta?.excerpt}
+      contentHtml={entry.contentHtml}
+      locale={validLocale}
+    />
   );
 }
 

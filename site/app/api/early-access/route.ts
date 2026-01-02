@@ -69,6 +69,7 @@ function validateInput(data: unknown): {
     name?: string;
     company?: string;
     role?: string;
+    companySize?: string;
     comment?: string;
   };
 } {
@@ -101,9 +102,17 @@ function validateInput(data: unknown): {
   }
 
   // Validate role if provided
-  const validRoles = ['founder', 'finance', 'ops', 'sales', 'other'];
+  // Note: Role values match the form dropdown options (WO-EA-001, WO-EA-002)
+  const validRoles = ['leadership', 'finance', 'operations', 'advisor', 'other'];
   if (body.role && typeof body.role === 'string' && !validRoles.includes(body.role)) {
     errors.push('Invalid role');
+  }
+
+  // Validate company size if provided
+  // Note: Company size values match the form dropdown options (WO-EA-001, WO-EA-002)
+  const validCompanySizes = ['1-10', '11-30', '31-75', '76-150', '150+'];
+  if (body.companySize && typeof body.companySize === 'string' && !validCompanySizes.includes(body.companySize)) {
+    errors.push('Invalid company size');
   }
 
   if (errors.length > 0) {
@@ -119,6 +128,7 @@ function validateInput(data: unknown): {
       name: body.name && typeof body.name === 'string' ? body.name.trim() : undefined,
       company: body.company && typeof body.company === 'string' ? body.company.trim() : undefined,
       role: body.role && typeof body.role === 'string' ? body.role : undefined,
+      companySize: body.companySize && typeof body.companySize === 'string' ? body.companySize : undefined,
       comment: body.comment && typeof body.comment === 'string' ? body.comment.trim() : undefined,
     },
   };
@@ -126,6 +136,41 @@ function validateInput(data: unknown): {
 
 /**
  * POST handler for early access form submission
+ * 
+ * IMPORTANT: Early Access Review Process (WO-EA-003)
+ * 
+ * Early Access requests are reviewed manually. This is intentional and aligns with
+ * Profitdrive's executive-safe, non-salesy approach.
+ * 
+ * Review Principles:
+ * - Quality over volume
+ * - Fit over speed
+ * - Deliberate follow-up, not automated pressure
+ * - Early Access is curated, not self-serve
+ * 
+ * Review Criteria (guidance only, use judgement):
+ * - Firm type: services / professional services
+ * - Company size: within intended operating range
+ * - Role: leadership, finance, or ops involvement
+ * - Indications of margin pressure or growth complexity
+ * - Signals of thoughtful evaluation (not "trial hunting")
+ * 
+ * Follow-Up Expectations:
+ * - Timing: Considered, not immediate (no SLA promises externally)
+ * - Tone: Personal, calm, exploratory (no sales script)
+ * - Intent: Clarify context, understand what prompted interest,
+ *   decide whether Early Access is appropriate
+ * 
+ * Explicit Non-Goals:
+ * - No sales funnel
+ * - No discounting
+ * - No urgency framing
+ * - No "book a demo" push
+ * - No automated drip campaigns
+ * 
+ * This endpoint receives submissions and forwards them to a webhook (if configured)
+ * or logs them (in dev). The actual review and follow-up happens outside this codebase,
+ * maintaining the manual, curated approach.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -174,6 +219,8 @@ export async function POST(request: NextRequest) {
     const { sanitized } = validation;
 
     // Send to webhook if configured
+    // Note: The webhook should route to a system where requests are manually reviewed.
+    // This is not an automated approval flow — Early Access is curated.
     const webhookUrl = process.env.EARLY_ACCESS_WEBHOOK_URL;
     if (webhookUrl) {
       try {
@@ -187,6 +234,7 @@ export async function POST(request: NextRequest) {
             name: sanitized.name,
             company: sanitized.company,
             role: sanitized.role,
+            companySize: sanitized.companySize,
             comment: sanitized.comment,
             submittedAt: new Date().toISOString(),
           }),
@@ -207,6 +255,7 @@ export async function POST(request: NextRequest) {
         name: sanitized.name,
         company: sanitized.company,
         role: sanitized.role,
+        companySize: sanitized.companySize,
         comment: sanitized.comment,
         submittedAt: new Date().toISOString(),
       });
@@ -225,4 +274,5 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
 

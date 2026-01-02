@@ -15,7 +15,7 @@ export interface AnalyticsConfig {
  * Get analytics configuration from environment
  */
 export function getAnalyticsConfig(): AnalyticsConfig {
-  const provider = (process.env.NEXT_PUBLIC_ANALYTICS_PROVIDER as AnalyticsProvider) || 'none';
+  const provider = (process.env.NEXT_PUBLIC_ANALYTICS_PROVIDER as AnalyticsProvider) ?? 'none';
   const key = process.env.NEXT_PUBLIC_ANALYTICS_KEY;
   const enabled = provider !== 'none' && !!key;
 
