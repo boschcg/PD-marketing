@@ -1,3 +1,6 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+
 /**
  * Product Page - What Profitdrive Replaces (and What It Doesn't)
  * 
@@ -59,35 +62,12 @@ function BulletList({ items }: { items: string[] }) {
 
 export default function ProductPageReplaces() {
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
+    <Section variant="base" padY="md" maxWidth="7xl">
       {/* Part 1: Framing */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Designed to work with your existing systems
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          Profitdrive is not a replacement for your core operating systems.
-          It sits above them, bringing commercial clarity to decisions they don't connect.
-        </p>
-      </div>
+      <SectionHeader
+        title="Designed to work with your existing systems"
+        lead="Profitdrive is not a replacement for your core operating systems. It sits above them, bringing commercial clarity to decisions they don't connect."
+      />
 
       {/* Part 2 & 3: Two-column layout on desktop, single column on mobile */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -107,7 +87,7 @@ export default function ProductPageReplaces() {
         {/* Part 3: What Profitdrive Does Not Replace */}
         <div>
           <h3
-            className="text-xl font-semibold mb-4"
+            className="text-xl font-semibold mb-3"
             style={{
               color: 'var(--pd-text)',
             }}
@@ -117,7 +97,7 @@ export default function ProductPageReplaces() {
           <BulletList items={DOES_NOT_REPLACE_ITEMS} />
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import PageShell from "../../components/PageShell";
+import Section from "../../components/layout/Section";
 import ContentLayout from "../../components/ContentLayout";
 import ProductPageOpening from "../../components/ProductPageOpening";
 import ProductPageFlow from "../../components/ProductPageFlow";
+import ProductPageExtensions from "../../components/ProductPageExtensions";
 import ProductPageGuardrails from "../../components/ProductPageGuardrails";
 import ProductPageReplaces from "../../components/ProductPageReplaces";
 import ProductPageRoles from "../../components/ProductPageRoles";
@@ -58,36 +60,44 @@ export default async function ProductPage({ params }: ProductPageProps) {
   
   return (
     <PageShell>
-      {/* Product Page Opening Section (WO-PROD-001) */}
+      {/* Product Page Opening Section (WO-PROD-001) - base */}
       <ProductPageOpening />
       
-      {/* Product Page End-to-End Flow Section (WO-PROD-002) */}
+      {/* Product Page End-to-End Flow Section (WO-PROD-002) - card */}
       <ProductPageFlow />
       
-      {/* Product Page Guardrails & Commercial Discipline Section (WO-PROD-003) */}
+      {/* Product Page Extensions & Change Requests Section (WO-PROD-010) - base */}
+      <ProductPageExtensions />
+      
+      {/* Product Page Guardrails & Commercial Discipline Section (WO-PROD-003) - card */}
       <ProductPageGuardrails />
       
-      {/* Product Page What Profitdrive Replaces Section (WO-PROD-004) */}
+      {/* Product Page What Profitdrive Replaces Section (WO-PROD-004) - base */}
       <ProductPageReplaces />
       
-      {/* Product Page Where Teams Use Profitdrive Section (WO-PROD-005) */}
+      {/* Product Page Where Teams Use Profitdrive Section (WO-PROD-005) - card */}
       <ProductPageRoles />
       
-      {/* Product Page What Adoption Looks Like Section (WO-PROD-006) */}
+      {/* Product Page What Adoption Looks Like Section (WO-PROD-006) - base */}
       <ProductPageAdoption />
       
-      {/* Product Page Why Profitdrive Is Different Section (WO-PROD-007) */}
+      {/* Product Page Why Profitdrive Is Different Section (WO-PROD-007) - card */}
       <ProductPageDifferentiation />
       
-      {/* Product Page Proof Signals Section (WO-PROD-008) */}
+      {/* Product Page Proof Signals Section (WO-PROD-008) - base */}
       <ProductPageProofSignals />
       
-      {/* Product Page Early Access Section (WO-PROD-009) */}
+      {/* Product Page Early Access Section (WO-PROD-009) - card */}
       <ProductPageEarlyAccess locale={validLocale} />
       
-      <ContentLayout toc={entry.toc} locale={validLocale}>
-        <div dangerouslySetInnerHTML={{ __html: entry.contentHtml }} />
-      </ContentLayout>
+      {/* Additional content from markdown */}
+      {entry.contentHtml && (
+        <Section variant="base" padY="md" maxWidth="7xl">
+          <ContentLayout toc={entry.toc} locale={validLocale}>
+            <div dangerouslySetInnerHTML={{ __html: entry.contentHtml }} />
+          </ContentLayout>
+        </Section>
+      )}
     </PageShell>
   );
 }

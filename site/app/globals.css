@@ -11,37 +11,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Prose styles for markdown content */
-.prose-content h1 {
-  font-size: 2.25rem;
-  line-height: 1.2;
-  font-weight: 700;
-  color: #111827;
+/* Typography tokens - standardized across all pages */
+h1 {
+  font-size: var(--pd-font-h1-size);
+  line-height: var(--pd-font-h1-line);
+  font-weight: var(--pd-font-h1-weight);
+  letter-spacing: var(--pd-font-h1-spacing);
+  color: var(--pd-text);
   margin-top: 0;
   margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
 }
 
-@media (min-width: 768px) {
-  .prose-content h1 {
-    font-size: 3rem;
-  }
+h2 {
+  font-size: var(--pd-font-h2-size);
+  line-height: var(--pd-font-h2-line);
+  font-weight: var(--pd-font-h2-weight);
+  letter-spacing: var(--pd-font-h2-spacing);
+  color: var(--pd-text);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+/* Prose styles for markdown content - restrained, max-width ~70ch */
+.prose-content {
+  max-width: 70ch;
+}
+
+.prose-content h1 {
+  font-size: var(--pd-font-h1-size);
+  line-height: var(--pd-font-h1-line);
+  font-weight: var(--pd-font-h1-weight);
+  color: var(--pd-text);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  letter-spacing: var(--pd-font-h1-spacing);
 }
 
 .prose-content h2 {
-  font-size: 1.5rem;
-  line-height: 1.3;
-  font-weight: 700;
-  color: #111827;
-  margin-top: 3rem;
-  margin-bottom: 1.25rem;
-  letter-spacing: -0.01em;
-}
-
-@media (min-width: 768px) {
-  .prose-content h2 {
-    font-size: 1.875rem;
-  }
+  font-size: var(--pd-font-h2-size);
+  line-height: var(--pd-font-h2-line);
+  font-weight: var(--pd-font-h2-weight);
+  color: var(--pd-text);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: var(--pd-font-h2-spacing);
 }
 
 .prose-content h3 {
@@ -49,8 +62,8 @@ body {
   line-height: 1.4;
   font-weight: 600;
   color: #111827;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 @media (min-width: 768px) {
@@ -60,10 +73,11 @@ body {
 }
 
 .prose-content p {
-  font-size: 1rem;
-  line-height: 1.75;
-  color: #374151;
-  margin-bottom: 1.5rem;
+  font-size: var(--pd-font-body-size);
+  line-height: var(--pd-font-body-line);
+  color: var(--pd-text-secondary);
+  margin-bottom: 1rem;
+  max-width: 70ch;
 }
 
 .prose-content ul,
@@ -103,14 +117,14 @@ body {
   border-top: 1px solid #e5e7eb;
 }
 
-/* Max content width for better readability */
+/* Max content width for better readability - ~70ch for long text blocks */
 .prose-content {
   max-width: 100%;
 }
 
 @media (min-width: 768px) {
   .prose-content {
-    max-width: 65ch;
+    max-width: 70ch;
   }
 }
 

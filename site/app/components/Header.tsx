@@ -12,10 +12,10 @@ interface HeaderProps {
 export default function Header({ locale }: HeaderProps) {
   return (
     <header 
-      className="bg-white border-b"
+      className="bg-white border-b border-slate-100"
       style={{
-        height: '64px',
-        borderColor: 'var(--pd-border)',
+        minHeight: '64px',
+        maxHeight: '30vh',
       }}
     >
       <Container>

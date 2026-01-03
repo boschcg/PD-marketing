@@ -32,23 +32,36 @@ function BuildUpBlockComponent({ block }: { block: BuildUpBlock }) {
   // Determine styling based on block type
   let valueColor = 'var(--pd-text)';
   let borderWidth = '1px';
+  let ringClass = '';
   
   if (type === 'outcome') {
     valueColor = BRAND_BLUE;
     borderWidth = '2px';
+    // Add subtle ring for best-case boxes
+    ringClass = 'ring-1';
   } else if (type === 'lever') {
     valueColor = BRAND_GREEN;
   } else if (isNegative) {
     valueColor = '#DC2626'; // muted red for negative base
   }
   
+  // Apply Level 1 elevation to all cards
+  const isOutcome = type === 'outcome';
+  
+  // Calculate box-shadow for ring effect on outcome blocks
+  const boxShadow = isOutcome 
+    ? '0 1px 2px 0 rgb(0 0 0 / 0.05), 0 0 0 1px rgba(55, 48, 163, 0.2)'
+    : '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+  
   return (
     <div
-      className="flex flex-col items-center justify-center p-5 rounded-lg"
+      className="flex flex-col items-center justify-center p-5 rounded-lg bg-white"
       style={{
-        backgroundColor: 'var(--pd-surface)',
-        border: `${borderWidth} solid var(--pd-border)`,
+        border: `${borderWidth} solid ${isOutcome ? BRAND_BLUE : 'var(--pd-border)'}`,
+        boxShadow,
         minWidth: '110px',
+        width: '100%',
+        maxWidth: '140px',
         flex: '1 1 0',
       }}
     >
@@ -79,21 +92,22 @@ function BuildUp({ title, blocks }: BuildUpProps) {
       </h3>
       
       {/* Horizontal block row - stacks vertically on mobile */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 overflow-x-auto sm:overflow-visible">
         {blocks.map((block, index) => {
           const isFirst = index === 0;
           const isOutcome = block.type === 'outcome';
           
           return (
-            <div key={index} className="flex items-center gap-3 w-full sm:w-auto sm:flex-1">
+            <div key={index} className="flex items-center gap-3 w-full sm:w-auto sm:flex-1 flex-shrink-0">
               {/* Operator before block */}
               {!isFirst && (
                 <span
                   className="text-xl font-medium flex-shrink-0"
                   style={{
-                    color: isOutcome ? BRAND_BLUE : 'var(--pd-text-secondary)',
+                    color: isOutcome ? BRAND_BLUE : BRAND_GREEN,
                     minWidth: '28px',
                     textAlign: 'center',
+                    strokeWidth: '2',
                   }}
                 >
                   {isOutcome ? '→' : '+'}

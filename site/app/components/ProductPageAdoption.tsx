@@ -1,3 +1,7 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+import Card from './ui/Card';
+
 /**
  * Product Page - What Adoption Looks Like (Week 1 → Steady State)
  * 
@@ -38,47 +42,18 @@ const ADOPTION_STAGES: AdoptionStage[] = [
 
 export default function ProductPageAdoption() {
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
+    <Section variant="base" padY="md" maxWidth="7xl">
       {/* Part 1: Framing */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Adoption without disruption
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          Profitdrive is designed to fit into how services firms already operate.
-          Most teams see useful insight quickly, without reworking processes or systems.
-        </p>
-      </div>
+      <SectionHeader
+        title="Adoption without disruption"
+        lead="Profitdrive is designed to fit into how services firms already operate. Most teams see useful insight quickly, without reworking processes or systems."
+      />
 
       {/* Part 2: Adoption Timeline */}
-      <div className="mb-12 lg:mb-16">
+      <div className="mb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {ADOPTION_STAGES.map((stage, index) => (
-            <div
-              key={index}
-              className="p-6 rounded-lg border border-[var(--pd-border)]"
-              style={{
-                backgroundColor: 'var(--pd-surface)',
-              }}
-            >
+            <Card key={index} elevation="2" hover>
               <div
                 className="text-sm font-medium mb-2"
                 style={{
@@ -104,7 +79,7 @@ export default function ProductPageAdoption() {
               >
                 {stage.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
@@ -121,7 +96,7 @@ export default function ProductPageAdoption() {
           Adoption is incremental by design — value appears early and compounds as the business grows.
         </p>
       </div>
-    </section>
+    </Section>
   );
 }
 

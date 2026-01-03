@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import PageShell from "../../../components/PageShell";
+import Section from "../../../components/layout/Section";
 import ContentLayout from "../../../components/ContentLayout";
 import { t } from "@/lib/i18n";
 import { getValidLocale } from "@/lib/locale-utils";
@@ -84,28 +85,32 @@ export default async function PlaybookSlugPage({ params }: PlaybookSlugPageProps
   return (
     <PageShell>
       {/* Breadcrumb and back link */}
-      <nav className="mb-6 text-sm text-gray-600">
-        <div className="flex items-center gap-2">
+      <Section variant="base" padY="md" maxWidth="7xl">
+        <nav className="mb-6 text-sm" style={{ color: 'var(--pd-text-secondary)' }}>
+          <div className="flex items-center gap-2">
+            <Link
+              href={`/${validLocale}/playbook`}
+              className="hover:opacity-80 transition-opacity"
+              style={{ color: 'var(--pd-text-secondary)' }}
+            >
+              {t(validLocale, 'common.playbook')}
+            </Link>
+            <span>/</span>
+            <span style={{ color: 'var(--pd-text)' }}>{entry.meta.title}</span>
+          </div>
           <Link
             href={`/${validLocale}/playbook`}
-            className="hover:text-gray-900 transition-colors"
+            className="mt-2 inline-block text-sm hover:opacity-80 transition-opacity"
+            style={{ color: 'var(--pd-text-secondary)' }}
           >
-            {t(validLocale, 'common.playbook')}
+            ← {t(validLocale, 'common.backToPlaybook')}
           </Link>
-          <span>/</span>
-          <span className="text-gray-900">{entry.meta.title}</span>
-        </div>
-        <Link
-          href={`/${validLocale}/playbook`}
-          className="mt-2 inline-block text-sm text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          ← {t(validLocale, 'common.backToPlaybook')}
-        </Link>
-      </nav>
-      
-      <ContentLayout toc={entry.toc} locale={validLocale}>
-        <div dangerouslySetInnerHTML={{ __html: entry.contentHtml }} />
-      </ContentLayout>
+        </nav>
+        
+        <ContentLayout toc={entry.toc} locale={validLocale}>
+          <div dangerouslySetInnerHTML={{ __html: entry.contentHtml }} />
+        </ContentLayout>
+      </Section>
     </PageShell>
   );
 }

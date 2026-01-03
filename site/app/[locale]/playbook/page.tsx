@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "../../components/PageShell";
+import Section from "../../components/layout/Section";
+import Card from "../../components/ui/Card";
 import { t } from "@/lib/i18n";
 import { getValidLocale } from "@/lib/locale-utils";
 import { listPlaybookEntries } from "@/lib/content/index";
@@ -41,45 +43,73 @@ export default async function PlaybookPage({ params }: PlaybookPageProps) {
   
   return (
     <PageShell>
-      <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 mb-8">
-        {t(validLocale, 'pages.playbook.title')}
-      </h1>
-      
-      <div className="space-y-6 mt-8">
-        {entries.map((entry) => {
-          // Generate slug for this entry
-          const filename = parse(entry.filePath).name;
-          const slug = getSlugFromFilename(filename, entry.meta.slug);
-          
-          return (
-            <article
-              key={slug}
-              className="border-b border-gray-200 pb-6 last:border-b-0"
-            >
+      {/* Page Hero */}
+      <Section variant="base" padY="lg" padding="hero" maxWidth="7xl">
+        <h1
+          style={{
+            fontSize: 'var(--pd-font-h1-size)',
+            lineHeight: 'var(--pd-font-h1-line)',
+            fontWeight: 'var(--pd-font-h1-weight)',
+            letterSpacing: 'var(--pd-font-h1-spacing)',
+            color: 'var(--pd-text)',
+            marginBottom: '1rem',
+          }}
+        >
+          {t(validLocale, 'pages.playbook.title')}
+        </h1>
+      </Section>
+
+      {/* Playbook Entries */}
+      <Section variant="card" padY="md" maxWidth="7xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {entries.map((entry) => {
+            // Generate slug for this entry
+            const filename = parse(entry.filePath).name;
+            const slug = getSlugFromFilename(filename, entry.meta.slug);
+            
+            return (
               <Link
+                key={slug}
                 href={`/${validLocale}/playbook/${slug}`}
                 className="block group"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
-                      {entry.meta.title}
-                    </h2>
-                    {entry.meta.excerpt && (
-                      <p className="text-sm text-gray-600 mb-3 leading-relaxed">
-                        {entry.meta.excerpt}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
-                      <span>{t(validLocale, 'common.readTime', { minutes: entry.readTimeMin })}</span>
-                    </div>
+                <Card hover elevation="2" className="h-full">
+                  <h2
+                    className="mb-2 group-hover:opacity-80 transition-opacity"
+                    style={{
+                      fontSize: '1.125rem',
+                      fontWeight: '600',
+                      color: 'var(--pd-text)',
+                    }}
+                  >
+                    {entry.meta.title}
+                  </h2>
+                  {entry.meta.excerpt && (
+                    <p
+                      className="mb-3 leading-relaxed"
+                      style={{
+                        fontSize: 'var(--pd-font-small-size)',
+                        lineHeight: 'var(--pd-font-body-line)',
+                        color: 'var(--pd-text-secondary)',
+                      }}
+                    >
+                      {entry.meta.excerpt}
+                    </p>
+                  )}
+                  <div
+                    className="text-xs"
+                    style={{
+                      color: 'var(--pd-text-secondary)',
+                    }}
+                  >
+                    {t(validLocale, 'common.readTime', { minutes: entry.readTimeMin })}
                   </div>
-                </div>
+                </Card>
               </Link>
-            </article>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      </Section>
     </PageShell>
   );
 }

@@ -9,6 +9,11 @@ interface NavLinkProps {
   locale: string;
 }
 
+/**
+ * NavLink component - Marketing navigation with app-aligned behavior
+ * Active state: anchored underline (matching app cockpit row)
+ * Hover: subtle text emphasis, not color jumps
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function NavLink({ href, children, locale: _locale }: NavLinkProps) {
   const pathname = usePathname();
@@ -18,10 +23,10 @@ export default function NavLink({ href, children, locale: _locale }: NavLinkProp
     <Link
       href={href}
       className={`
-        text-sm font-medium transition-colors relative inline-block
+        text-sm font-medium transition-all relative inline-block pb-2
         ${isActive 
-          ? 'text-[var(--brand-blue)] font-semibold pb-2' 
-          : 'text-[var(--pd-text-secondary)] hover:text-[var(--brand-blue)] pb-2'
+          ? 'text-[var(--pd-text)] font-semibold' 
+          : 'text-[var(--pd-text-secondary)] hover:text-[var(--pd-text)] hover:font-medium'
         }
       `}
     >
@@ -32,6 +37,7 @@ export default function NavLink({ href, children, locale: _locale }: NavLinkProp
           style={{ 
             backgroundColor: 'var(--brand-blue)',
             height: '2px',
+            borderRadius: '1px',
           }}
         />
       )}

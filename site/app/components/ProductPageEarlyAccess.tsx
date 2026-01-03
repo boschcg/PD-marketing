@@ -1,3 +1,7 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+import Button from './ui/Button';
+
 /**
  * Product Page - Transition to Early Access (Soft CTA, No Pressure)
  * 
@@ -14,8 +18,6 @@
  * 2. What Early Access Is (and Is Not) - two columns
  * 3. Action: Single CTA button
  */
-
-import Button from './ui/Button';
 
 interface ProductPageEarlyAccessProps {
   locale?: string;
@@ -68,43 +70,20 @@ export default function ProductPageEarlyAccess({ locale = 'en' }: ProductPageEar
   const earlyAccessUrl = `/${locale}/early-access`;
 
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
+    <Section variant="card" padY="md" maxWidth="7xl">
       {/* Part 1: Framing */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Explore Profitdrive at your own pace
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          Early Access is designed for firms that want to explore Profitdrive thoughtfully —
-          without a sales process or long-term commitment.
-        </p>
-      </div>
+      <SectionHeader
+        title="Explore Profitdrive at your own pace"
+        lead="Early Access is designed for firms that want to explore Profitdrive thoughtfully — without a sales process or long-term commitment."
+      />
 
       {/* Part 2: What Early Access Is (and Is Not) - Two columns on desktop, stacked on mobile */}
-      <div className="mb-12 lg:mb-16">
+      <div className="mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Column A: What Early Access Is */}
           <div>
             <h3
-              className="text-xl font-semibold mb-4"
+              className="text-xl font-semibold mb-3"
               style={{
                 color: 'var(--pd-text)',
               }}
@@ -117,7 +96,7 @@ export default function ProductPageEarlyAccess({ locale = 'en' }: ProductPageEar
           {/* Column B: What Early Access Is Not */}
           <div>
             <h3
-              className="text-xl font-semibold mb-4"
+              className="text-xl font-semibold mb-3"
               style={{
                 color: 'var(--pd-text)',
               }}
@@ -143,7 +122,7 @@ export default function ProductPageEarlyAccess({ locale = 'en' }: ProductPageEar
           Early Access is intentionally limited and reviewed.
         </p>
       </div>
-    </section>
+    </Section>
   );
 }
 

@@ -1,3 +1,7 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+import Card from './ui/Card';
+
 /**
  * Product Page Opening Component
  * 
@@ -34,54 +38,25 @@ const FIVE_REALITIES: RealityBlock[] = [
     description: 'How work is actually delivered and extended over time.',
   },
   {
-    title: 'Actuals',
-    description: 'What ultimately happens, aligned to accounting reality.',
+    title: 'Outlook vs Actuals',
+    description: 'A continuous check that planned profit remains aligned to accounting reality — with variances surfaced early, not after the month closes.',
   },
 ];
 
 export default function ProductPageOpening() {
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
+    <Section variant="base" padY="lg" maxWidth="7xl">
       {/* Part 1: Outcome Reminder */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          From future profit visibility to confident decisions
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          Profitdrive exists to make future profit visible early enough to act on it.
-          Not as a report, and not as a spreadsheet — but as a live, shared view of how commercial decisions shape revenue and margin before they're locked in.
-        </p>
-      </div>
+      <SectionHeader
+        title="From future profit visibility to confident decisions"
+        lead="Profitdrive exists to make future profit visible early enough to act on it. Not as a report, and not as a spreadsheet — but as a live, shared view of how commercial decisions shape revenue and margin before they're locked in."
+      />
 
       {/* Part 2: The Five Connected Realities */}
-      <div className="mb-12 lg:mb-16">
+      <div className="mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {FIVE_REALITIES.map((reality, index) => (
-            <div
-              key={index}
-              className="p-5 rounded-lg border border-[var(--pd-border)]"
-              style={{
-                backgroundColor: 'var(--pd-surface)',
-              }}
-            >
+            <Card key={index} elevation="2" hover>
               <h3
                 className="text-lg font-semibold mb-2"
                 style={{
@@ -99,7 +74,7 @@ export default function ProductPageOpening() {
               >
                 {reality.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
@@ -116,7 +91,7 @@ export default function ProductPageOpening() {
           Profitdrive brings these realities together into a single commercial decision system — so leaders can see the impact of pricing, staffing, and delivery choices before those decisions are locked into the P&L.
         </p>
       </div>
-    </section>
+    </Section>
   );
 }
 

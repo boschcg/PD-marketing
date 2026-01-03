@@ -2,6 +2,8 @@ import Container from './ui/Container';
 import Button from './ui/Button';
 import Card from './ui/Card';
 import SectionHeading from './ui/SectionHeading';
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
 import BrandWordmark from './BrandWordmark';
 import Prose from './Prose';
 import ProfitOutlookBuildUp from './ProfitOutlookBuildUp';
@@ -34,164 +36,139 @@ export default function HomepageLayout({
   return (
     <main style={{ background: 'var(--pd-bg)', minHeight: '100vh' }}>
       {/* Hero Section */}
-      <section 
-        className="bg-[var(--pd-surface)] border-b"
-        style={{ borderColor: 'var(--pd-border)' }}
-      >
-        <Container>
-          <div 
-            className="py-12 md:py-16 lg:py-20"
-            style={{ paddingTop: 'var(--pd-space-section)', paddingBottom: 'var(--pd-space-section)' }}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Left: Hero Content */}
-              <div>
-                <h1 
-                  className="mb-5 leading-tight"
-                  style={{
-                    fontSize: '2rem',
-                    lineHeight: '1.2',
-                    fontWeight: '600',
-                    color: 'var(--pd-text)',
-                  }}
-                >
-                  {heroHeadline}
-                </h1>
-                <p
-                  className="mb-8 leading-relaxed"
-                  style={{
-                    fontSize: '1.25rem',
-                    lineHeight: 'var(--pd-font-body-line)',
-                    color: 'var(--pd-text-secondary)',
-                  }}
-                >
-                  {heroSubhead}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button href={`/${locale}/early-access`} variant="primary">
-                    {t(locale, 'forms.earlyAccess.title')}
-                  </Button>
-                  <Button href={`/${locale}/product`} variant="secondary">
-                    {t(locale, 'footer.links.productOverview')}
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Right: Profit Outlook Build-Up */}
-              <div className="hidden lg:block">
-                <Card hover className="bg-gradient-to-br from-[var(--pd-surface)] to-[var(--pd-surface-hover)]">
-                  <ProfitOutlookBuildUp />
-                </Card>
-                <p
-                  className="mt-4 text-sm"
-                  style={{
-                    color: 'var(--pd-text-secondary)',
-                    textAlign: 'center',
-                  }}
-                >
-                  {insightLine}
-                </p>
-              </div>
+      <Section variant="base" padY="lg" padding="hero">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Hero Content */}
+          <div>
+            <h1 
+              className="mb-5 leading-tight"
+              style={{
+                fontSize: '2rem',
+                lineHeight: '1.2',
+                fontWeight: '600',
+                color: 'var(--pd-text)',
+              }}
+            >
+              {heroHeadline}
+            </h1>
+            <p
+              className="mb-12 leading-relaxed"
+              style={{
+                fontSize: '1.25rem',
+                lineHeight: 'var(--pd-font-body-line)',
+                color: 'var(--pd-text-secondary)',
+              }}
+            >
+              {heroSubhead}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button href={`/${locale}/early-access`} variant="primary" className="min-h-[44px]">
+                {t(locale, 'forms.earlyAccess.title')}
+              </Button>
+              <Button href={`/${locale}/product`} variant="secondary" className="border-[var(--pd-border)] text-[var(--pd-text-secondary)] hover:text-[var(--pd-text)] hover:bg-transparent min-h-[44px]">
+                {t(locale, 'footer.links.productOverview')}
+              </Button>
             </div>
           </div>
-        </Container>
-      </section>
+          
+          {/* Right: Profit Outlook Build-Up */}
+          <div className="order-2 lg:order-none mt-8 lg:mt-0">
+            <div 
+              className="rounded-xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md p-6"
+            >
+              <ProfitOutlookBuildUp />
+            </div>
+            <p
+              className="mt-4 text-sm"
+              style={{
+                color: 'var(--pd-text-secondary)',
+                textAlign: 'center',
+              }}
+            >
+              {insightLine}
+            </p>
+          </div>
+        </div>
+      </Section>
 
       {/* Value Props Section */}
-      <section 
-        className="bg-[var(--pd-surface)] border-b"
-        style={{ borderColor: 'var(--pd-border)' }}
-      >
-        <Container>
-          <div 
-            className="py-12 md:py-16"
-            style={{ paddingTop: 'var(--pd-space-section)', paddingBottom: 'var(--pd-space-section)' }}
-          >
-            <SectionHeading 
-              title="What Profitdrive does"
-              subtitle="Connect five realities that are usually fragmented"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card hover>
-                <h3 
-                  className="font-semibold mb-2"
-                  style={{ 
-                    fontSize: '1.125rem',
-                    color: 'var(--pd-text)',
-                  }}
-                >
-                  Commercial Clarity
-                </h3>
-                <p 
-                  style={{
-                    fontSize: 'var(--pd-font-body-size)',
-                    lineHeight: 'var(--pd-font-body-line)',
-                    color: 'var(--pd-text-secondary)',
-                  }}
-                >
-                  Make financial consequences visible early enough to change decisions.
-                </p>
-              </Card>
-              <Card hover>
-                <h3 
-                  className="font-semibold mb-2"
-                  style={{ 
-                    fontSize: '1.125rem',
-                    color: 'var(--pd-text)',
-                  }}
-                >
-                  Forward Profit View
-                </h3>
-                <p 
-                  style={{
-                    fontSize: 'var(--pd-font-body-size)',
-                    lineHeight: 'var(--pd-font-body-line)',
-                    color: 'var(--pd-text-secondary)',
-                  }}
-                >
-                  See profit trajectory before month-end reporting, not after.
-                </p>
-              </Card>
-              <Card hover>
-                <h3 
-                  className="font-semibold mb-2"
-                  style={{ 
-                    fontSize: '1.125rem',
-                    color: 'var(--pd-text)',
-                  }}
-                >
-                  Decision Support
-                </h3>
-                <p 
-                  style={{
-                    fontSize: 'var(--pd-font-body-size)',
-                    lineHeight: 'var(--pd-font-body-line)',
-                    color: 'var(--pd-text-secondary)',
-                  }}
-                >
-                  Support judgment with shared commercial models, not replace it.
-                </p>
-              </Card>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <Section variant="card" padY="md">
+        <SectionHeader
+          title="What Profitdrive does"
+          lead="Connect five realities that are usually fragmented"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card hover elevation="2" className="h-full">
+            <h3 
+              className="font-semibold mb-2"
+              style={{ 
+                fontSize: '1.125rem',
+                color: 'var(--pd-text)',
+              }}
+            >
+              Commercial Clarity
+            </h3>
+            <p 
+              style={{
+                fontSize: 'var(--pd-font-body-size)',
+                lineHeight: 'var(--pd-font-body-line)',
+                color: 'var(--pd-text-secondary)',
+              }}
+            >
+              Make financial consequences visible early enough to change decisions.
+            </p>
+          </Card>
+          <Card hover elevation="2" className="h-full">
+            <h3 
+              className="font-semibold mb-2"
+              style={{ 
+                fontSize: '1.125rem',
+                color: 'var(--pd-text)',
+              }}
+            >
+              Forward Profit View
+            </h3>
+            <p 
+              style={{
+                fontSize: 'var(--pd-font-body-size)',
+                lineHeight: 'var(--pd-font-body-line)',
+                color: 'var(--pd-text-secondary)',
+              }}
+            >
+              See profit trajectory before month-end reporting, not after.
+            </p>
+          </Card>
+          <Card hover elevation="2" className="h-full">
+            <h3 
+              className="font-semibold mb-2"
+              style={{ 
+                fontSize: '1.125rem',
+                color: 'var(--pd-text)',
+              }}
+            >
+              Decision Support
+            </h3>
+            <p 
+              style={{
+                fontSize: 'var(--pd-font-body-size)',
+                lineHeight: 'var(--pd-font-body-line)',
+                color: 'var(--pd-text-secondary)',
+              }}
+            >
+              Support judgment with shared commercial models, not replace it.
+            </p>
+          </Card>
+        </div>
+      </Section>
 
       {/* Content Section */}
-      <section className="bg-[var(--pd-surface)]">
-        <Container>
-          <div 
-            className="py-12 md:py-16 lg:py-24"
-            style={{ paddingTop: 'var(--pd-space-section)', paddingBottom: 'var(--pd-space-section)' }}
-          >
-            <div style={{ maxWidth: '65ch', margin: '0 auto' }}>
-              <Prose>
-                <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
-              </Prose>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <Section variant="base" padY="md" maxWidth="7xl">
+        <div style={{ maxWidth: '65ch', margin: '0 auto' }}>
+          <Prose>
+            <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+          </Prose>
+        </div>
+      </Section>
     </main>
   );
 }

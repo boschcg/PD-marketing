@@ -497,6 +497,7 @@ export default function EarlyAccessForm({ locale }: EarlyAccessFormProps) {
         </button>
       </div>
     </form>
+    </div>
   );
 }
 

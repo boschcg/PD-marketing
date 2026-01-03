@@ -1,3 +1,6 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+
 /**
  * Product Page Guardrails & Commercial Discipline Section
  * 
@@ -31,35 +34,12 @@ const JUDGEMENT_ITEMS = [
 
 export default function ProductPageGuardrails() {
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
+    <Section variant="card" padY="md" maxWidth="7xl">
       {/* Part 1: Framing */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Commercial discipline without heavy governance
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          Profitdrive is designed to support better commercial decisions — not to centralise control or slow teams down.
-          It provides shared guardrails, while leaving judgement with leaders.
-        </p>
-      </div>
+      <SectionHeader
+        title="Commercial discipline without heavy governance"
+        lead="Profitdrive is designed to support better commercial decisions — not to centralise control or slow teams down. It provides shared guardrails, while leaving judgement with leaders."
+      />
 
       {/* Part 2: What Profitdrive Holds Consistent */}
       <div className="mb-12 lg:mb-16">
@@ -98,9 +78,9 @@ export default function ProductPageGuardrails() {
       </div>
 
       {/* Part 3: What Remains in Leadership Judgement */}
-      <div className="mb-12 lg:mb-16">
+      <div className="mb-8">
         <h3
-          className="text-xl font-semibold mb-4"
+          className="text-xl font-semibold mb-3"
           style={{
             color: 'var(--pd-text)',
           }}
@@ -146,7 +126,7 @@ export default function ProductPageGuardrails() {
           reducing late surprises without adding process overhead.
         </p>
       </div>
-    </section>
+    </Section>
   );
 }
 

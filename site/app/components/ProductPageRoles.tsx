@@ -1,3 +1,7 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+import Card from './ui/Card';
+
 /**
  * Product Page - Where Teams Use Profitdrive (Roles & Touchpoints)
  * 
@@ -34,47 +38,17 @@ const ROLE_BLOCKS: RoleBlock[] = [
 
 export default function ProductPageRoles() {
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
-      {/* Part 1: Framing */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Used across leadership, finance, and operations
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          Profitdrive is not owned by a single function.
-          It provides a shared commercial view that different roles use in different ways.
-        </p>
-      </div>
+    <Section variant="card" padY="md" maxWidth="7xl">
+      <SectionHeader
+        title="Used across leadership, finance, and operations"
+        lead="Profitdrive is not owned by a single function. It provides a shared commercial view that different roles use in different ways."
+      />
 
       {/* Part 2: Role-Based Usage */}
-      <div className="mb-12 lg:mb-16">
+      <div className="mb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {ROLE_BLOCKS.map((role, index) => (
-            <div
-              key={index}
-              className="p-6 rounded-lg border border-[var(--pd-border)]"
-              style={{
-                backgroundColor: 'var(--pd-surface)',
-              }}
-            >
+            <Card key={index} hover elevation="2">
               <h3
                 className="text-lg font-semibold mb-3"
                 style={{
@@ -92,7 +66,7 @@ export default function ProductPageRoles() {
               >
                 {role.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
@@ -109,7 +83,7 @@ export default function ProductPageRoles() {
           By sharing the same commercial picture, teams make faster, more aligned decisions — without adding process or meetings.
         </p>
       </div>
-    </section>
+    </Section>
   );
 }
 

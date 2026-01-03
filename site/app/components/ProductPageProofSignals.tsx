@@ -1,3 +1,7 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+import Card from './ui/Card';
+
 /**
  * Product Page - Proof Signals (Without Case Studies)
  * 
@@ -34,47 +38,18 @@ const PROOF_SIGNALS: ProofSignal[] = [
 
 export default function ProductPageProofSignals() {
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
+    <Section variant="base" padY="md" maxWidth="7xl">
       {/* Part 1: Framing */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Built for firms that take profit seriously
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          Profitdrive is designed for leaders who want clarity before committing —
-          and systems that hold up as complexity increases.
-        </p>
-      </div>
+      <SectionHeader
+        title="Built for firms that take profit seriously"
+        lead="Profitdrive is designed for leaders who want clarity before committing — and systems that hold up as complexity increases."
+      />
 
       {/* Part 2: Proof Signals */}
-      <div className="mb-12 lg:mb-16">
+      <div className="mb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {PROOF_SIGNALS.map((signal, index) => (
-            <div
-              key={index}
-              className="p-6 rounded-lg border border-[var(--pd-border)]"
-              style={{
-                backgroundColor: 'var(--pd-surface)',
-              }}
-            >
+            <Card key={index} elevation="2" hover>
               <h3
                 className="text-lg font-semibold mb-3"
                 style={{
@@ -92,7 +67,7 @@ export default function ProductPageProofSignals() {
               >
                 {signal.explanation}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
@@ -109,7 +84,7 @@ export default function ProductPageProofSignals() {
           The result is a system that earns trust early — and continues to hold up as the business evolves.
         </p>
       </div>
-    </section>
+    </Section>
   );
 }
 

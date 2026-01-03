@@ -1,3 +1,6 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+
 /**
  * Product Page End-to-End Flow Section
  * 
@@ -6,11 +9,12 @@
  * Explains how Profitdrive operates end-to-end, from pipeline to profit.
  * Conceptual flow, not UI walkthrough.
  * 
- * Four parts:
+ * Five parts:
  * 1. Framing: Profit is decided before delivery
  * 2. The End-to-End Flow (5 sequential steps)
  * 3. Where Profitdrive sits in this flow
  * 4. Time as the differentiator
+ * 5. Reinforcing line about actuals alignment
  */
 
 interface FlowStep {
@@ -42,92 +46,79 @@ const FLOW_STEPS: FlowStep[] = [
   },
   {
     number: 5,
-    title: 'Actuals confirm or expose variance',
-    description: 'Actuals reconcile the plan with reality, revealing where assumptions held — and where they didn\'t.',
+    title: 'Outlook confirmed',
+    description: 'Actuals validate the outlook. Small variances confirm discipline; larger variances feed learning back into future decisions.',
   },
 ];
 
 export default function ProductPageFlow() {
   return (
-    <section 
-      className="mb-16 lg:mb-24"
-      style={{
-        paddingTop: 'var(--pd-space-section)',
-        paddingBottom: 'var(--pd-space-section)',
-      }}
-    >
+    <Section variant="card" padY="md" maxWidth="7xl">
       {/* Part 1: Framing: Profit Is Decided Before Delivery */}
-      <div className="mb-12 lg:mb-16">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-4"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Profit is decided before work begins
-        </h2>
-        <p
-          className="text-lg leading-relaxed max-w-3xl"
-          style={{
-            color: 'var(--pd-text-secondary)',
-            lineHeight: 'var(--pd-font-body-line)',
-          }}
-        >
-          In services firms, profit is rarely lost in accounting.
-          It's lost earlier — in pricing assumptions, staffing decisions, delivery mix, and unmanaged extensions.
-          Profitdrive is designed to surface these decisions while there is still time to change them.
-        </p>
-      </div>
+      <SectionHeader
+        title="Profit is decided before work begins"
+        lead="In services firms, profit is rarely lost in accounting. It's lost earlier — in pricing assumptions, staffing decisions, delivery mix, and unmanaged extensions. Profitdrive is designed to surface these decisions while there is still time to change them."
+      />
 
       {/* Part 2: The End-to-End Flow */}
-      <div className="mb-12 lg:mb-16">
-        <div className="space-y-8">
-          {FLOW_STEPS.map((step) => (
-            <div
-              key={step.number}
-              className="flex gap-6"
-            >
-              {/* Step Number */}
-              <div
-                className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-semibold"
-                style={{
-                  backgroundColor: 'var(--pd-surface)',
-                  border: '2px solid var(--pd-border)',
-                  color: 'var(--pd-text)',
-                  fontSize: '1.125rem',
-                }}
-              >
-                {step.number}
-              </div>
-              
-              {/* Step Content */}
-              <div className="flex-1">
-                <h3
-                  className="text-xl font-semibold mb-2"
+      <div className="mb-8">
+        <div className="space-y-4">
+          {FLOW_STEPS.map((step, index) => (
+            <div key={step.number}>
+              {/* Step Row */}
+              <div className="bg-white border border-slate-200 rounded-lg shadow-sm p-6 flex gap-6">
+                {/* Step Number */}
+                <div
+                  className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-semibold bg-slate-50 border border-slate-200"
                   style={{
                     color: 'var(--pd-text)',
+                    fontSize: '1.125rem',
                   }}
                 >
-                  {step.title}
-                </h3>
-                <p
-                  className="text-base leading-relaxed"
-                  style={{
-                    color: 'var(--pd-text-secondary)',
-                    lineHeight: 'var(--pd-font-body-line)',
-                  }}
-                >
-                  {step.description}
-                </p>
+                  {step.number}
+                </div>
+                
+                {/* Step Content */}
+                <div className="flex-1">
+                  <h3
+                    className="text-xl font-semibold mb-2"
+                    style={{
+                      color: 'var(--pd-text)',
+                    }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p
+                    className="text-base leading-relaxed"
+                    style={{
+                      color: 'var(--pd-text-secondary)',
+                      lineHeight: 'var(--pd-font-body-line)',
+                    }}
+                  >
+                    {step.description}
+                  </p>
+                </div>
               </div>
+              
+              {/* Subtle connecting line between steps (except after last step) */}
+              {index < FLOW_STEPS.length - 1 && (
+                <div className="flex justify-center py-2">
+                  <div 
+                    className="w-px h-4"
+                    style={{
+                      backgroundColor: 'var(--pd-border)',
+                      opacity: 0.5,
+                    }}
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
 
       {/* Part 3: Where Profitdrive Sits in This Flow */}
-      <div className="mb-12 lg:mb-16">
+      <div className="mb-6">
         <p
           className="text-lg leading-relaxed max-w-3xl"
           style={{
@@ -140,7 +131,7 @@ export default function ProductPageFlow() {
       </div>
 
       {/* Part 4: Time as the Differentiator */}
-      <div>
+      <div className="mb-4">
         <p
           className="text-lg leading-relaxed max-w-3xl font-medium"
           style={{
@@ -151,7 +142,20 @@ export default function ProductPageFlow() {
           This is the difference between understanding profit after the fact — and managing it deliberately, before it's locked in.
         </p>
       </div>
-    </section>
+
+      {/* Part 5: Reinforcing line about actuals */}
+      <div>
+        <p
+          className="text-base leading-relaxed max-w-3xl"
+          style={{
+            color: 'var(--pd-text-secondary)',
+            lineHeight: 'var(--pd-font-body-line)',
+          }}
+        >
+          When Profitdrive is used well, actuals hold few surprises — they confirm what leadership already knew.
+        </p>
+      </div>
+    </Section>
   );
 }
 

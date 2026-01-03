@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import PageShell from "../../components/PageShell";
+import Section from "../../components/layout/Section";
+import SectionHeader from "../../components/layout/SectionHeader";
 import EarlyAccessPageContent from "../../components/EarlyAccessPageContent";
 import EarlyAccessForm from "../../components/EarlyAccessForm";
 import { t } from "@/lib/i18n";
@@ -55,18 +57,29 @@ export default async function EarlyAccessPage({ params }: EarlyAccessPageProps) 
       <EarlyAccessPageContent />
       
       {/* Section 6: Request Early Access Form */}
-      <section className="mt-16 lg:mt-24">
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-6"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Request Early Access
-        </h2>
-        <EarlyAccessForm locale={validLocale} />
-      </section>
+      <Section variant="base" padY="lg" maxWidth="7xl">
+        <div className="flex justify-center">
+          <div 
+            className="bg-white rounded-xl p-8 w-full"
+            style={{
+              maxWidth: '36rem', // max-w-xl equivalent
+              boxShadow: 'var(--pd-shadow-xl)',
+              border: '1px solid var(--pd-border)',
+            }}
+          >
+            <h2
+              className="text-2xl lg:text-3xl font-semibold mb-4"
+              style={{
+                color: 'var(--pd-text)',
+                lineHeight: '1.3',
+              }}
+            >
+              Request Early Access
+            </h2>
+            <EarlyAccessForm locale={validLocale} />
+          </div>
+        </div>
+      </Section>
     </PageShell>
   );
 }

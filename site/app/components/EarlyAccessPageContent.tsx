@@ -1,3 +1,7 @@
+import Section from './layout/Section';
+import SectionHeader from './layout/SectionHeader';
+import Card from './ui/Card';
+
 /**
  * Early Access Page - Structure & Narrative (Low-friction, Executive-safe)
  * 
@@ -108,14 +112,17 @@ function BulletList({ items }: { items: string[] }) {
 
 export default function EarlyAccessPageContent() {
   return (
-    <div className="space-y-16 lg:space-y-24">
+    <>
       {/* Section 1: Page Header (Framing) */}
-      <section>
+      <Section variant="base" padY="lg" padding="hero" maxWidth="7xl">
         <h1
-          className="text-3xl lg:text-4xl font-semibold mb-4"
           style={{
+            fontSize: 'var(--pd-font-h1-size)',
+            lineHeight: 'var(--pd-font-h1-line)',
+            fontWeight: 'var(--pd-font-h1-weight)',
+            letterSpacing: 'var(--pd-font-h1-spacing)',
             color: 'var(--pd-text)',
-            lineHeight: '1.3',
+            marginBottom: '1rem',
           }}
         >
           Early Access
@@ -130,39 +137,28 @@ export default function EarlyAccessPageContent() {
           Early Access is for services firms that want forward profit clarity without adopting a heavy system.
           Explore Profitdrive with your own data and decide if it fits.
         </p>
-      </section>
+      </Section>
 
       {/* Section 2: Who Early Access Is For */}
-      <section>
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-6"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          Who Early Access is for
-        </h2>
+      <Section variant="card" padY="md" maxWidth="7xl">
+        <SectionHeader
+          title="Who Early Access is for"
+        />
         <BulletList items={WHO_IS_FOR} />
-      </section>
+      </Section>
 
       {/* Section 3: What You Get */}
-      <section>
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-6"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          What you get
-        </h2>
-        <div className="space-y-6">
+      <Section variant="base" padY="md" maxWidth="7xl">
+        <SectionHeader
+          title="What you get"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {WHAT_YOU_GET.map((item, index) => (
-            <div key={index}>
+            <Card key={index} hover elevation="2">
               <h3
-                className="text-lg font-semibold mb-2"
+                className="font-semibold mb-2"
                 style={{
+                  fontSize: '1.125rem',
                   color: 'var(--pd-text)',
                 }}
               >
@@ -177,38 +173,33 @@ export default function EarlyAccessPageContent() {
               >
                 {item.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
-      </section>
+      </Section>
 
       {/* Section 4: What Setup Looks Like */}
-      <section>
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-6"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          What setup looks like
-        </h2>
-        <div className="space-y-8">
+      <Section variant="card" padY="md" maxWidth="7xl">
+        <SectionHeader
+          title="What setup looks like"
+        />
+        <div className="space-y-6">
           {SETUP_STEPS.map((step) => (
-            <div key={step.number} className="flex gap-6">
+            <Card key={step.number} elevation="1" className="flex gap-6">
               <div
-                className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-base"
+                className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-semibold"
                 style={{
-                  backgroundColor: 'var(--pd-surface)',
+                  backgroundColor: 'var(--pd-surface-base)',
                   color: 'var(--pd-text)',
-                  border: '1px solid var(--pd-border)',
+                  border: '2px solid var(--pd-border)',
+                  fontSize: '1.125rem',
                 }}
               >
                 {step.number}
               </div>
               <div className="flex-1">
                 <h3
-                  className="text-lg font-semibold mb-2"
+                  className="text-xl font-semibold mb-2"
                   style={{
                     color: 'var(--pd-text)',
                   }}
@@ -225,22 +216,16 @@ export default function EarlyAccessPageContent() {
                   {step.description}
                 </p>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
-      </section>
+      </Section>
 
       {/* Section 5: What Early Access Is (and Is Not) */}
-      <section>
-        <h2
-          className="text-2xl lg:text-3xl font-semibold mb-6"
-          style={{
-            color: 'var(--pd-text)',
-            lineHeight: '1.3',
-          }}
-        >
-          How Early Access works
-        </h2>
+      <Section variant="base" padY="md" maxWidth="7xl">
+        <SectionHeader
+          title="How Early Access works"
+        />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Column A: What it is */}
           <div>
@@ -268,8 +253,8 @@ export default function EarlyAccessPageContent() {
             <BulletList items={WHAT_IT_IS_NOT} />
           </div>
         </div>
-      </section>
-    </div>
+      </Section>
+    </>
   );
 }
 
